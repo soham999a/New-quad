@@ -91,6 +91,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "QiDS — Quadrant Intelligence Development System" },
+      { name: "description", content: "QiDS Intelligence Platform is a web application for human development infrastructure." },
+      { property: "og:description", content: "QiDS Intelligence Platform is a web application for human development infrastructure." },
+      { name: "twitter:description", content: "QiDS Intelligence Platform is a web application for human development infrastructure." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b4400299-f3bc-4b2e-a375-fa845c1b0dc2/id-preview-1e344864--6103e57c-1ea2-4457-a600-fae81119bb64.lovable.app-1782043461669.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b4400299-f3bc-4b2e-a375-fa845c1b0dc2/id-preview-1e344864--6103e57c-1ea2-4457-a600-fae81119bb64.lovable.app-1782043461669.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
