@@ -12,6 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ModeRouteImport } from './routes/mode'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppStemRouteImport } from './routes/app.stem'
+import { Route as AppRoadmapRouteImport } from './routes/app.roadmap'
+import { Route as AppReportRouteImport } from './routes/app.report'
+import { Route as AppKidsRouteImport } from './routes/app.kids'
+import { Route as AppIqpRouteImport } from './routes/app.iqp'
+import { Route as AppFrameworkRouteImport } from './routes/app.framework'
+import { Route as AppAssessmentRouteImport } from './routes/app.assessment'
 
 const ModeRoute = ModeRouteImport.update({
   id: '/mode',
@@ -28,34 +36,130 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppStemRoute = AppStemRouteImport.update({
+  id: '/stem',
+  path: '/stem',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRoadmapRoute = AppRoadmapRouteImport.update({
+  id: '/roadmap',
+  path: '/roadmap',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReportRoute = AppReportRouteImport.update({
+  id: '/report',
+  path: '/report',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppKidsRoute = AppKidsRouteImport.update({
+  id: '/kids',
+  path: '/kids',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppIqpRoute = AppIqpRouteImport.update({
+  id: '/iqp',
+  path: '/iqp',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFrameworkRoute = AppFrameworkRouteImport.update({
+  id: '/framework',
+  path: '/framework',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessmentRoute = AppAssessmentRouteImport.update({
+  id: '/assessment',
+  path: '/assessment',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/app': typeof AppRoute
+  '/app': typeof AppRouteWithChildren
   '/mode': typeof ModeRoute
+  '/app/assessment': typeof AppAssessmentRoute
+  '/app/framework': typeof AppFrameworkRoute
+  '/app/iqp': typeof AppIqpRoute
+  '/app/kids': typeof AppKidsRoute
+  '/app/report': typeof AppReportRoute
+  '/app/roadmap': typeof AppRoadmapRoute
+  '/app/stem': typeof AppStemRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/app': typeof AppRoute
   '/mode': typeof ModeRoute
+  '/app/assessment': typeof AppAssessmentRoute
+  '/app/framework': typeof AppFrameworkRoute
+  '/app/iqp': typeof AppIqpRoute
+  '/app/kids': typeof AppKidsRoute
+  '/app/report': typeof AppReportRoute
+  '/app/roadmap': typeof AppRoadmapRoute
+  '/app/stem': typeof AppStemRoute
+  '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/app': typeof AppRoute
+  '/app': typeof AppRouteWithChildren
   '/mode': typeof ModeRoute
+  '/app/assessment': typeof AppAssessmentRoute
+  '/app/framework': typeof AppFrameworkRoute
+  '/app/iqp': typeof AppIqpRoute
+  '/app/kids': typeof AppKidsRoute
+  '/app/report': typeof AppReportRoute
+  '/app/roadmap': typeof AppRoadmapRoute
+  '/app/stem': typeof AppStemRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/mode'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/mode'
+    | '/app/assessment'
+    | '/app/framework'
+    | '/app/iqp'
+    | '/app/kids'
+    | '/app/report'
+    | '/app/roadmap'
+    | '/app/stem'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app' | '/mode'
-  id: '__root__' | '/' | '/app' | '/mode'
+  to:
+    | '/'
+    | '/mode'
+    | '/app/assessment'
+    | '/app/framework'
+    | '/app/iqp'
+    | '/app/kids'
+    | '/app/report'
+    | '/app/roadmap'
+    | '/app/stem'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/mode'
+    | '/app/assessment'
+    | '/app/framework'
+    | '/app/iqp'
+    | '/app/kids'
+    | '/app/report'
+    | '/app/roadmap'
+    | '/app/stem'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AppRoute: typeof AppRoute
+  AppRoute: typeof AppRouteWithChildren
   ModeRoute: typeof ModeRoute
 }
 
@@ -82,12 +186,92 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/stem': {
+      id: '/app/stem'
+      path: '/stem'
+      fullPath: '/app/stem'
+      preLoaderRoute: typeof AppStemRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/roadmap': {
+      id: '/app/roadmap'
+      path: '/roadmap'
+      fullPath: '/app/roadmap'
+      preLoaderRoute: typeof AppRoadmapRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/report': {
+      id: '/app/report'
+      path: '/report'
+      fullPath: '/app/report'
+      preLoaderRoute: typeof AppReportRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/kids': {
+      id: '/app/kids'
+      path: '/kids'
+      fullPath: '/app/kids'
+      preLoaderRoute: typeof AppKidsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/iqp': {
+      id: '/app/iqp'
+      path: '/iqp'
+      fullPath: '/app/iqp'
+      preLoaderRoute: typeof AppIqpRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/framework': {
+      id: '/app/framework'
+      path: '/framework'
+      fullPath: '/app/framework'
+      preLoaderRoute: typeof AppFrameworkRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/assessment': {
+      id: '/app/assessment'
+      path: '/assessment'
+      fullPath: '/app/assessment'
+      preLoaderRoute: typeof AppAssessmentRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAssessmentRoute: typeof AppAssessmentRoute
+  AppFrameworkRoute: typeof AppFrameworkRoute
+  AppIqpRoute: typeof AppIqpRoute
+  AppKidsRoute: typeof AppKidsRoute
+  AppReportRoute: typeof AppReportRoute
+  AppRoadmapRoute: typeof AppRoadmapRoute
+  AppStemRoute: typeof AppStemRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAssessmentRoute: AppAssessmentRoute,
+  AppFrameworkRoute: AppFrameworkRoute,
+  AppIqpRoute: AppIqpRoute,
+  AppKidsRoute: AppKidsRoute,
+  AppReportRoute: AppReportRoute,
+  AppRoadmapRoute: AppRoadmapRoute,
+  AppStemRoute: AppStemRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AppRoute: AppRoute,
+  AppRoute: AppRouteWithChildren,
   ModeRoute: ModeRoute,
 }
 export const routeTree = rootRouteImport
