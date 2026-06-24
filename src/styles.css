@@ -67,7 +67,7 @@
   --background: oklch(0.14 0.005 250);
   --foreground: oklch(0.96 0.005 90);
   --surface: oklch(0.17 0.005 250);
-  --surface-2: oklch(0.20 0.006 250);
+  --surface-2: oklch(0.2 0.006 250);
 
   --card: oklch(0.17 0.005 250);
   --card-foreground: oklch(0.96 0.005 90);
@@ -98,18 +98,18 @@
   --gold-soft: oklch(0.78 0.12 82 / 14%);
 
   --band-red: oklch(0.62 0.16 25);
-  --band-yellow: oklch(0.80 0.13 80);
+  --band-yellow: oklch(0.8 0.13 80);
   --band-green: oklch(0.68 0.13 155);
 
   --iq: oklch(0.78 0.12 82);
   --eq: oklch(0.72 0.11 195);
-  --sq: oklch(0.72 0.10 280);
+  --sq: oklch(0.72 0.1 280);
   --aq: oklch(0.74 0.13 25);
 
   --sidebar: oklch(0.13 0.005 250);
   --sidebar-foreground: oklch(0.78 0.01 90);
   --sidebar-border: oklch(0.22 0.005 250);
-  --sidebar-accent: oklch(0.20 0.006 250);
+  --sidebar-accent: oklch(0.2 0.006 250);
   --sidebar-accent-foreground: oklch(0.96 0.005 90);
 
   --radius: 4px;
@@ -146,7 +146,12 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
     letter-spacing: -0.012em;
     font-weight: 400;
@@ -177,8 +182,16 @@
   }
   .grid-bg {
     background-image:
-      linear-gradient(to right, color-mix(in oklab, var(--border) 60%, transparent) 1px, transparent 1px),
-      linear-gradient(to bottom, color-mix(in oklab, var(--border) 60%, transparent) 1px, transparent 1px);
+      linear-gradient(
+        to right,
+        color-mix(in oklab, var(--border) 60%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--border) 60%, transparent) 1px,
+        transparent 1px
+      );
     background-size: 80px 80px;
   }
   .num {
@@ -189,6 +202,11 @@
 }
 
 @media print {
-  .no-print { display: none !important; }
-  body { background: white !important; color: black !important; }
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
 }

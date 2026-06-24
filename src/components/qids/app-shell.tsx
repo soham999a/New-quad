@@ -1,6 +1,7 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { Wordmark } from "./brand";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   LayoutGrid,
   ClipboardList,
@@ -10,6 +11,10 @@ import {
   Sparkles,
   Beaker,
   ChevronRight,
+  Shield,
+  Users,
+  UserCircle,
+  LogOut,
 } from "lucide-react";
 
 const NAV = [
@@ -21,10 +26,16 @@ const NAV = [
   { to: "/app/report", label: "Export", icon: FileText },
 ];
 
-const SECONDARY = [
-  { to: "/app/kids", label: "AI for Kids", icon: Sparkles },
-  { to: "/app/stem", label: "STEM · STEAM · STREAM", icon: Beaker },
-];
+const SECONDARY = [{ to: "/app/stem", label: "STEM · STEAM · STREAM", icon: Beaker }];
+
+const ROLE_NAV: Record<string, { to: string; label: string; icon: any }[]> = {
+  evaluator: [{ to: "/app/evaluator", label: "Evaluator Dashboard", icon: Users }],
+  admin: [
+    { to: "/app/admin", label: "Admin Panel", icon: Shield },
+    { to: "/app/evaluator", label: "Evaluator View", icon: Users },
+  ],
+  student: [{ to: "/app/my-evaluator", label: "My Evaluator", icon: UserCircle }],
+};
 
 const MODES = ["Individual", "School", "College", "Corporate", "Interview", "Custom"];
 
@@ -33,14 +44,39 @@ export function AppShell({
   title,
   eyebrow,
   action,
-  mode = "Individual",
 }: {
   children: ReactNode;
   title?: string;
   eyebrow?: string;
   action?: ReactNode;
-  mode?: string;
+  mode?: never;
 }) {
+  const auth = useAuth?.();
+  const navigate = useNavigate();
+  const user = auth?.user;
+  const userProfile = auth?.userProfile;
+  const activeMode =
+    (typeof window !== "undefined" ? localStorage.getItem("qids_mode") : null) || "individual";
+  const initials =
+    user?.displayName
+      ?.split(" ")
+      .map((n: string) => n[0])
+      .join("")
+      .toUpperCase() ||
+    user?.email?.[0]?.toUpperCase() ||
+    "U";
+  const displayName =
+    user?.displayName || userProfile?.name || user?.email?.split("@")[0] || "User";
+  const role = userProfile?.role || "participant";
+  const roleNav = ROLE_NAV[role] || [];
+
+  const handleLogout = async () => {
+    if (auth?.logout) {
+      await auth.logout();
+      navigate({ to: "/" });
+    }
+  };
+
   return (
     <div className="min-h-screen flex bg-background text-foreground">
       {/* Sidebar */}
@@ -57,6 +93,18 @@ export function AppShell({
               ))}
             </ul>
           </div>
+          {roleNav.length > 0 && (
+            <div>
+              <div className="label-eyebrow px-3 mb-3">
+                {role === "admin" ? "Administration" : "Role"}
+              </div>
+              <ul className="space-y-0.5">
+                {roleNav.map((item) => (
+                  <NavItem key={item.to} {...item} />
+                ))}
+              </ul>
+            </div>
+          )}
           <div>
             <div className="label-eyebrow px-3 mb-3">Modules</div>
             <ul className="space-y-0.5">
@@ -66,7 +114,7 @@ export function AppShell({
             </ul>
           </div>
         </nav>
-        <div className="px-6 py-5 border-t border-border">
+        <div className="px-6 py-5 border-t border-border space-y-2">
           <div className="label-eyebrow mb-2">Build</div>
           <div className="font-mono text-[11px] text-muted-foreground">QiDS · v0.1 · MVP</div>
         </div>
@@ -83,7 +131,7 @@ export function AppShell({
             <div className="hidden md:flex items-center gap-2 text-[12px] text-muted-foreground font-mono tracking-wider">
               <span className="text-[var(--gold)]">●</span>
               <span>MODE</span>
-              <span className="text-foreground">{mode.toUpperCase()}</span>
+              <span className="text-foreground">{activeMode.toUpperCase()}</span>
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -94,17 +142,33 @@ export function AppShell({
               SWITCH MODE <ChevronRight className="w-3 h-3" />
             </Link>
             <div className="h-7 w-px bg-border hidden md:block" />
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full border border-[var(--border-strong)] flex items-center justify-center text-[11px] font-mono">
-                AK
+            {user ? (
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full border border-[var(--border-strong)] flex items-center justify-center text-[11px] font-mono bg-gold/10">
+                  {initials}
+                </div>
+                <div className="hidden md:flex flex-col leading-none">
+                  <span className="text-[12px]">{displayName}</span>
+                  <span className="text-[10px] text-muted-foreground font-mono tracking-wider uppercase">
+                    {role}
+                  </span>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="ml-2 text-muted-foreground hover:text-foreground transition"
+                  title="Sign out"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
               </div>
-              <div className="hidden md:flex flex-col leading-none">
-                <span className="text-[12px]">A. Kumar</span>
-                <span className="text-[10px] text-muted-foreground font-mono tracking-wider">
-                  PARTICIPANT
-                </span>
-              </div>
-            </div>
+            ) : (
+              <Link
+                to="/auth/login"
+                className="text-[12px] font-mono tracking-wider text-muted-foreground hover:text-foreground"
+              >
+                SIGN IN
+              </Link>
+            )}
           </div>
         </header>
 
@@ -153,11 +217,11 @@ function NavItem({
         to={to}
         activeOptions={{ exact }}
         activeProps={{
-          className:
-            "bg-[var(--sidebar-accent)] text-foreground border-l-2 border-[var(--gold)]",
+          className: "bg-[var(--sidebar-accent)] text-foreground border-l-2 border-[var(--gold)]",
         }}
         inactiveProps={{
-          className: "text-muted-foreground border-l-2 border-transparent hover:text-foreground hover:bg-[var(--sidebar-accent)]/60",
+          className:
+            "text-muted-foreground border-l-2 border-transparent hover:text-foreground hover:bg-[var(--sidebar-accent)]/60",
         }}
         className="flex items-center gap-3 px-3 py-2.5 text-[13px] transition-colors"
       >

@@ -7,9 +7,17 @@ export const Route = createFileRoute("/app/stem")({
 });
 
 const TRACKS = [
-  { code: "STEM", expand: "Science · Technology · Engineering · Math", desc: "Core disciplinary foundation for schools and colleges." },
+  {
+    code: "STEM",
+    expand: "Science · Technology · Engineering · Math",
+    desc: "Core disciplinary foundation for schools and colleges.",
+  },
   { code: "STEAM", expand: "+ Arts", desc: "Adds creative practice and design reasoning." },
-  { code: "STREAM", expand: "+ Reading & Arts", desc: "Integrates literacy and humanistic reasoning across disciplines." },
+  {
+    code: "STREAM",
+    expand: "+ Reading & Arts",
+    desc: "Integrates literacy and humanistic reasoning across disciplines.",
+  },
 ];
 
 function Stem() {
@@ -23,7 +31,9 @@ function Stem() {
           {TRACKS.map((t) => (
             <div key={t.code} className="bg-background p-8">
               <div className="font-display text-[34px] text-[var(--gold)] mb-2">{t.code}</div>
-              <div className="text-[12px] font-mono tracking-wider text-muted-foreground mb-5 uppercase">{t.expand}</div>
+              <div className="text-[12px] font-mono tracking-wider text-muted-foreground mb-5 uppercase">
+                {t.expand}
+              </div>
               <div className="text-[14px] leading-relaxed text-muted-foreground">{t.desc}</div>
             </div>
           ))}

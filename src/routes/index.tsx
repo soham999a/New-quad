@@ -1,7 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Wordmark, MatrixMark } from "@/components/qids/brand";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { ArrowUpRight, ArrowRight, LogOut } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,24 +25,64 @@ export const Route = createFileRoute("/")({
 });
 
 function Landing() {
+  const auth = useAuth();
+  const navigate = useNavigate();
+  const user = auth.user;
+  const userProfile = auth.userProfile;
+
+  const handleLogout = async () => {
+    await auth.logout();
+    navigate({ to: "/" });
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Nav */}
       <header className="px-6 lg:px-12 h-20 flex items-center justify-between border-b border-border">
         <Wordmark subtitle />
         <nav className="hidden md:flex items-center gap-10 text-[12px] font-mono tracking-[0.18em] uppercase text-muted-foreground">
-          <Link to="/app/framework" className="hover:text-foreground transition">Framework</Link>
-          <Link to="/mode" className="hover:text-foreground transition">Modes</Link>
-          <Link to="/app/kids" className="hover:text-foreground transition">AI for Kids</Link>
-          <Link to="/app" className="hover:text-foreground transition">Platform</Link>
+          <Link to="/app/framework" className="hover:text-foreground transition">
+            Framework
+          </Link>
+          <Link to="/mode" className="hover:text-foreground transition">
+            Modes
+          </Link>
+          <Link to="/app/stem" className="hover:text-foreground transition">
+            STEAM
+          </Link>
+          <Link to="/app" className="hover:text-foreground transition">
+            Platform
+          </Link>
         </nav>
         <div className="flex items-center gap-3">
-          <Link to="/app" className="hidden md:inline-flex text-[12px] font-mono tracking-wider text-muted-foreground hover:text-foreground">
-            SIGN IN
-          </Link>
-          <Button asChild variant="gold" size="sm">
-            <Link to="/mode">Begin Assessment</Link>
-          </Button>
+          {user ? (
+            <>
+              <Link
+                to="/app/assessment"
+                className="text-[12px] font-mono tracking-wider text-foreground hover:text-gold"
+              >
+                Continue Assessment
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="text-[12px] font-mono tracking-wider text-muted-foreground hover:text-foreground flex items-center gap-1"
+              >
+                Sign Out <LogOut className="w-3 h-3" />
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/auth/login"
+                className="hidden md:inline-flex text-[12px] font-mono tracking-wider text-muted-foreground hover:text-foreground"
+              >
+                SIGN IN
+              </Link>
+              <Button asChild variant="gold" size="sm">
+                <Link to="/mode">Begin Assessment</Link>
+              </Button>
+            </>
+          )}
         </div>
       </header>
 
@@ -58,13 +99,15 @@ function Landing() {
               <span className="text-muted-foreground">structured.</span>
             </h1>
             <p className="mt-10 max-w-xl text-[16px] md:text-[18px] leading-[1.6] text-muted-foreground">
-              QiDS is infrastructure for human capability. It measures, develops, and tracks
-              the four quotients that define how individuals and institutions think, feel,
-              relate, and adapt — IQ, EQ, SQ, and AQ.
+              QiDS is infrastructure for human capability. It measures, develops, and tracks the
+              four quotients that define how individuals and institutions think, feel, relate, and
+              adapt — IQ, EQ, SQ, and AQ.
             </p>
             <div className="mt-12 flex flex-wrap items-center gap-4">
               <Button asChild variant="gold" size="lg">
-                <Link to="/mode">Begin Assessment <ArrowRight className="w-4 h-4" /></Link>
+                <Link to="/mode">
+                  Begin Assessment <ArrowRight className="w-4 h-4" />
+                </Link>
               </Button>
               <Button asChild variant="ghost" size="lg">
                 <Link to="/app/framework">Read the Framework</Link>
@@ -89,7 +132,9 @@ function Landing() {
             <div key={label} className="bg-background p-8">
               <div className="num text-[42px] text-[var(--gold)] mb-3">{num}</div>
               <div className="text-[14px] text-foreground">{label}</div>
-              <div className="text-[11px] font-mono tracking-wider text-muted-foreground mt-1 uppercase">{sub}</div>
+              <div className="text-[11px] font-mono tracking-wider text-muted-foreground mt-1 uppercase">
+                {sub}
+              </div>
             </div>
           ))}
         </div>
@@ -104,16 +149,36 @@ function Landing() {
               Four quotients. <br /> One coherent system.
             </h2>
             <p className="mt-6 text-muted-foreground max-w-md leading-relaxed">
-              QiDS treats development as architecture. Each quotient is measured, banded,
-              and connected to deliberate practice — not a score in isolation.
+              QiDS treats development as architecture. Each quotient is measured, banded, and
+              connected to deliberate practice — not a score in isolation.
             </p>
           </div>
           <div className="col-span-12 lg:col-span-8 grid sm:grid-cols-2 gap-px bg-border border border-border">
             {[
-              { k: "IQ", n: "01", t: "Cognitive Intelligence", d: "Reasoning, analysis, structured problem-solving and synthesis." },
-              { k: "EQ", n: "02", t: "Emotional Intelligence", d: "Self-awareness, empathy, regulation, and relational depth." },
-              { k: "SQ", n: "03", t: "Social Intelligence", d: "Collaboration, citizenship, communication, contextual judgment." },
-              { k: "AQ", n: "04", t: "Adaptive Intelligence", d: "Resilience, learning agility, response to ambiguity and change." },
+              {
+                k: "IQ",
+                n: "01",
+                t: "Cognitive Intelligence",
+                d: "Reasoning, analysis, structured problem-solving and synthesis.",
+              },
+              {
+                k: "EQ",
+                n: "02",
+                t: "Emotional Intelligence",
+                d: "Self-awareness, empathy, regulation, and relational depth.",
+              },
+              {
+                k: "SQ",
+                n: "03",
+                t: "Social Intelligence",
+                d: "Collaboration, citizenship, communication, contextual judgment.",
+              },
+              {
+                k: "AQ",
+                n: "04",
+                t: "Adaptive Intelligence",
+                d: "Resilience, learning agility, response to ambiguity and change.",
+              },
             ].map((q) => (
               <div key={q.k} className="bg-background p-8 flex flex-col">
                 <div className="flex items-baseline justify-between mb-6">
@@ -134,11 +199,14 @@ function Landing() {
           <div>
             <div className="label-eyebrow-gold mb-4">III — APPLICATION</div>
             <h2 className="font-display text-[36px] lg:text-[44px] leading-[1.05] tracking-tight max-w-xl">
-              One framework. <br />Six contexts.
+              One framework. <br />
+              Six contexts.
             </h2>
           </div>
           <Button asChild variant="outline">
-            <Link to="/mode">Choose a mode <ArrowUpRight className="w-4 h-4" /></Link>
+            <Link to="/mode">
+              Choose a mode <ArrowUpRight className="w-4 h-4" />
+            </Link>
           </Button>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border">
@@ -167,11 +235,13 @@ function Landing() {
               Curiosity, structured for ages 8–14.
             </h3>
             <p className="text-muted-foreground text-[14px] leading-relaxed max-w-md">
-              Story-based learning, missions, and challenges that develop intelligence
-              without losing the seriousness of the system.
+              Story-based learning, missions, and challenges that develop intelligence without
+              losing the seriousness of the system.
             </p>
             <Button asChild variant="ghost" className="mt-8 -ml-3">
-              <Link to="/app/kids">Open Kids module <ArrowRight className="w-4 h-4" /></Link>
+              <Link to="/app/kids">
+                Open Kids module <ArrowRight className="w-4 h-4" />
+              </Link>
             </Button>
           </div>
           <div className="col-span-12 lg:col-span-6 border border-border p-10">
@@ -180,11 +250,13 @@ function Landing() {
               Disciplinary depth, integrated with development.
             </h3>
             <p className="text-muted-foreground text-[14px] leading-relaxed max-w-md">
-              For schools and colleges that want quotient development connected to
-              science, technology, arts, reading, and engineering practice.
+              For schools and colleges that want quotient development connected to science,
+              technology, arts, reading, and engineering practice.
             </p>
             <Button asChild variant="ghost" className="mt-8 -ml-3">
-              <Link to="/app/stem">View extension <ArrowRight className="w-4 h-4" /></Link>
+              <Link to="/app/stem">
+                View extension <ArrowRight className="w-4 h-4" />
+              </Link>
             </Button>
           </div>
         </div>
@@ -210,7 +282,9 @@ function Landing() {
       {/* Footer */}
       <footer className="px-6 lg:px-12 py-10 border-t border-border flex items-center justify-between text-[11px] font-mono tracking-wider text-muted-foreground uppercase flex-wrap gap-4">
         <div className="flex items-center gap-3">
-          <span className="text-[var(--gold)]"><MatrixMark size={20} /></span>
+          <span className="text-[var(--gold)]">
+            <MatrixMark size={20} />
+          </span>
           <span>QiDS · Quadrant Intelligence Development System</span>
         </div>
         <span>© {new Date().getFullYear()} · A MATRIX system</span>

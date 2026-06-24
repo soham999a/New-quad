@@ -28,7 +28,11 @@ const PHASES = [
     label: "WEEK 7–9 · INTEGRATE",
     status: "pending",
     title: "Cross-quotient synthesis",
-    items: ["Lead a cross-functional review", "Synthesis micro-module · 4 sessions", "Mid-cycle IQP refresh"],
+    items: [
+      "Lead a cross-functional review",
+      "Synthesis micro-module · 4 sessions",
+      "Mid-cycle IQP refresh",
+    ],
   },
   {
     label: "WEEK 10–12 · EVIDENCE",
@@ -40,10 +44,7 @@ const PHASES = [
 
 function Roadmap() {
   return (
-    <AppShell
-      eyebrow="DEVELOPMENT ROADMAP · 12 WEEKS"
-      title="A deliberate path, not a checklist."
-    >
+    <AppShell eyebrow="DEVELOPMENT ROADMAP · 12 WEEKS" title="A deliberate path, not a checklist.">
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12 lg:col-span-4 border border-border p-8">
           <div className="label-eyebrow mb-4">FOCUS QUOTIENT</div>
@@ -78,8 +79,12 @@ function Roadmap() {
               <ul className="space-y-2 mt-6">
                 {p.items.map((i) => (
                   <li key={i} className="flex items-start gap-3 text-[14px]">
-                    <span className={`mt-1.5 w-1.5 h-1.5 rounded-full ${p.status === "complete" ? "bg-[var(--band-green)]" : p.status === "active" ? "bg-[var(--gold)]" : "bg-[var(--border-strong)]"}`} />
-                    <span className={p.status === "pending" ? "text-muted-foreground" : ""}>{i}</span>
+                    <span
+                      className={`mt-1.5 w-1.5 h-1.5 rounded-full ${p.status === "complete" ? "bg-[var(--band-green)]" : p.status === "active" ? "bg-[var(--gold)]" : "bg-[var(--border-strong)]"}`}
+                    />
+                    <span className={p.status === "pending" ? "text-muted-foreground" : ""}>
+                      {i}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -100,8 +105,16 @@ function StatusPill({ status }: { status: string }) {
   const s = map[status];
   return (
     <div className="flex items-center gap-2 text-[10px] font-mono tracking-[0.18em]">
-      {status === "complete" ? <Check className="w-3 h-3" style={{ color: s.color }} /> : <span className="w-1.5 h-1.5 rounded-full" style={{ background: s.color }} />}
-      <span style={{ color: status === "pending" ? "var(--muted-foreground)" : "var(--foreground)" }}>{s.label}</span>
+      {status === "complete" ? (
+        <Check className="w-3 h-3" style={{ color: s.color }} />
+      ) : (
+        <span className="w-1.5 h-1.5 rounded-full" style={{ background: s.color }} />
+      )}
+      <span
+        style={{ color: status === "pending" ? "var(--muted-foreground)" : "var(--foreground)" }}
+      >
+        {s.label}
+      </span>
     </div>
   );
 }

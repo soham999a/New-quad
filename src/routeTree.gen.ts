@@ -13,13 +13,18 @@ import { Route as ModeRouteImport } from './routes/mode'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AuthSignupRouteImport } from './routes/auth.signup'
+import { Route as AuthLoginRouteImport } from './routes/auth.login'
 import { Route as AppStemRouteImport } from './routes/app.stem'
 import { Route as AppRoadmapRouteImport } from './routes/app.roadmap'
 import { Route as AppReportRouteImport } from './routes/app.report'
+import { Route as AppMyEvaluatorRouteImport } from './routes/app.my-evaluator'
 import { Route as AppKidsRouteImport } from './routes/app.kids'
 import { Route as AppIqpRouteImport } from './routes/app.iqp'
 import { Route as AppFrameworkRouteImport } from './routes/app.framework'
+import { Route as AppEvaluatorRouteImport } from './routes/app.evaluator'
 import { Route as AppAssessmentRouteImport } from './routes/app.assessment'
+import { Route as AppAdminRouteImport } from './routes/app.admin'
 
 const ModeRoute = ModeRouteImport.update({
   id: '/mode',
@@ -41,6 +46,16 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AuthSignupRoute = AuthSignupRouteImport.update({
+  id: '/auth/signup',
+  path: '/auth/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppStemRoute = AppStemRouteImport.update({
   id: '/stem',
   path: '/stem',
@@ -54,6 +69,11 @@ const AppRoadmapRoute = AppRoadmapRouteImport.update({
 const AppReportRoute = AppReportRouteImport.update({
   id: '/report',
   path: '/report',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMyEvaluatorRoute = AppMyEvaluatorRouteImport.update({
+  id: '/my-evaluator',
+  path: '/my-evaluator',
   getParentRoute: () => AppRoute,
 } as any)
 const AppKidsRoute = AppKidsRouteImport.update({
@@ -71,9 +91,19 @@ const AppFrameworkRoute = AppFrameworkRouteImport.update({
   path: '/framework',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEvaluatorRoute = AppEvaluatorRouteImport.update({
+  id: '/evaluator',
+  path: '/evaluator',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAssessmentRoute = AppAssessmentRouteImport.update({
   id: '/assessment',
   path: '/assessment',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminRoute = AppAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -81,25 +111,35 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/mode': typeof ModeRoute
+  '/app/admin': typeof AppAdminRoute
   '/app/assessment': typeof AppAssessmentRoute
+  '/app/evaluator': typeof AppEvaluatorRoute
   '/app/framework': typeof AppFrameworkRoute
   '/app/iqp': typeof AppIqpRoute
   '/app/kids': typeof AppKidsRoute
+  '/app/my-evaluator': typeof AppMyEvaluatorRoute
   '/app/report': typeof AppReportRoute
   '/app/roadmap': typeof AppRoadmapRoute
   '/app/stem': typeof AppStemRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/mode': typeof ModeRoute
+  '/app/admin': typeof AppAdminRoute
   '/app/assessment': typeof AppAssessmentRoute
+  '/app/evaluator': typeof AppEvaluatorRoute
   '/app/framework': typeof AppFrameworkRoute
   '/app/iqp': typeof AppIqpRoute
   '/app/kids': typeof AppKidsRoute
+  '/app/my-evaluator': typeof AppMyEvaluatorRoute
   '/app/report': typeof AppReportRoute
   '/app/roadmap': typeof AppRoadmapRoute
   '/app/stem': typeof AppStemRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
   '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
@@ -107,13 +147,18 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/mode': typeof ModeRoute
+  '/app/admin': typeof AppAdminRoute
   '/app/assessment': typeof AppAssessmentRoute
+  '/app/evaluator': typeof AppEvaluatorRoute
   '/app/framework': typeof AppFrameworkRoute
   '/app/iqp': typeof AppIqpRoute
   '/app/kids': typeof AppKidsRoute
+  '/app/my-evaluator': typeof AppMyEvaluatorRoute
   '/app/report': typeof AppReportRoute
   '/app/roadmap': typeof AppRoadmapRoute
   '/app/stem': typeof AppStemRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
@@ -122,38 +167,53 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/mode'
+    | '/app/admin'
     | '/app/assessment'
+    | '/app/evaluator'
     | '/app/framework'
     | '/app/iqp'
     | '/app/kids'
+    | '/app/my-evaluator'
     | '/app/report'
     | '/app/roadmap'
     | '/app/stem'
+    | '/auth/login'
+    | '/auth/signup'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/mode'
+    | '/app/admin'
     | '/app/assessment'
+    | '/app/evaluator'
     | '/app/framework'
     | '/app/iqp'
     | '/app/kids'
+    | '/app/my-evaluator'
     | '/app/report'
     | '/app/roadmap'
     | '/app/stem'
+    | '/auth/login'
+    | '/auth/signup'
     | '/app'
   id:
     | '__root__'
     | '/'
     | '/app'
     | '/mode'
+    | '/app/admin'
     | '/app/assessment'
+    | '/app/evaluator'
     | '/app/framework'
     | '/app/iqp'
     | '/app/kids'
+    | '/app/my-evaluator'
     | '/app/report'
     | '/app/roadmap'
     | '/app/stem'
+    | '/auth/login'
+    | '/auth/signup'
     | '/app/'
   fileRoutesById: FileRoutesById
 }
@@ -161,6 +221,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   ModeRoute: typeof ModeRoute
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthSignupRoute: typeof AuthSignupRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -193,6 +255,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/auth/signup': {
+      id: '/auth/signup'
+      path: '/auth/signup'
+      fullPath: '/auth/signup'
+      preLoaderRoute: typeof AuthSignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/app/stem': {
       id: '/app/stem'
       path: '/stem'
@@ -212,6 +288,13 @@ declare module '@tanstack/react-router' {
       path: '/report'
       fullPath: '/app/report'
       preLoaderRoute: typeof AppReportRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/my-evaluator': {
+      id: '/app/my-evaluator'
+      path: '/my-evaluator'
+      fullPath: '/app/my-evaluator'
+      preLoaderRoute: typeof AppMyEvaluatorRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/kids': {
@@ -235,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFrameworkRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/evaluator': {
+      id: '/app/evaluator'
+      path: '/evaluator'
+      fullPath: '/app/evaluator'
+      preLoaderRoute: typeof AppEvaluatorRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/assessment': {
       id: '/app/assessment'
       path: '/assessment'
@@ -242,14 +332,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAssessmentRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/admin': {
+      id: '/app/admin'
+      path: '/admin'
+      fullPath: '/app/admin'
+      preLoaderRoute: typeof AppAdminRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
+  AppAdminRoute: typeof AppAdminRoute
   AppAssessmentRoute: typeof AppAssessmentRoute
+  AppEvaluatorRoute: typeof AppEvaluatorRoute
   AppFrameworkRoute: typeof AppFrameworkRoute
   AppIqpRoute: typeof AppIqpRoute
   AppKidsRoute: typeof AppKidsRoute
+  AppMyEvaluatorRoute: typeof AppMyEvaluatorRoute
   AppReportRoute: typeof AppReportRoute
   AppRoadmapRoute: typeof AppRoadmapRoute
   AppStemRoute: typeof AppStemRoute
@@ -257,10 +357,13 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdminRoute: AppAdminRoute,
   AppAssessmentRoute: AppAssessmentRoute,
+  AppEvaluatorRoute: AppEvaluatorRoute,
   AppFrameworkRoute: AppFrameworkRoute,
   AppIqpRoute: AppIqpRoute,
   AppKidsRoute: AppKidsRoute,
+  AppMyEvaluatorRoute: AppMyEvaluatorRoute,
   AppReportRoute: AppReportRoute,
   AppRoadmapRoute: AppRoadmapRoute,
   AppStemRoute: AppStemRoute,
@@ -273,7 +376,19 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   ModeRoute: ModeRoute,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthSignupRoute: AuthSignupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

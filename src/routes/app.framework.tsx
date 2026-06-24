@@ -7,25 +7,46 @@ export const Route = createFileRoute("/app/framework")({
 });
 
 const PRINCIPLES = [
-  ["I", "Structure precedes signal", "Identify the governing architecture before instruments are built."],
-  ["II", "Measurement is the beginning", "Assessment exists to support deliberate development, never to label."],
+  [
+    "I",
+    "Structure precedes signal",
+    "Identify the governing architecture before instruments are built.",
+  ],
+  [
+    "II",
+    "Measurement is the beginning",
+    "Assessment exists to support deliberate development, never to label.",
+  ],
   ["III", "Evidence over assertion", "Every banding shift is supported by triangulated evidence."],
-  ["IV", "Contexts, not categories", "The same person is measured differently across modes and seasons."],
+  [
+    "IV",
+    "Contexts, not categories",
+    "The same person is measured differently across modes and seasons.",
+  ],
 ];
 
 const PARAMS = [
-  ["IQ", ["Analytical reasoning","Pattern recognition","Working memory","Synthesis","Numerical fluency"]],
-  ["EQ", ["Self-awareness","Empathy","Regulation","Motivation","Relational depth"]],
-  ["SQ", ["Collaboration","Communication","Citizenship","Contextual judgment","Influence"]],
-  ["AQ", ["Resilience","Learning agility","Ambiguity tolerance","Adaptive response","Recovery"]],
+  [
+    "IQ",
+    [
+      "Analytical reasoning",
+      "Pattern recognition",
+      "Working memory",
+      "Synthesis",
+      "Numerical fluency",
+    ],
+  ],
+  ["EQ", ["Self-awareness", "Empathy", "Regulation", "Motivation", "Relational depth"]],
+  ["SQ", ["Collaboration", "Communication", "Citizenship", "Contextual judgment", "Influence"]],
+  [
+    "AQ",
+    ["Resilience", "Learning agility", "Ambiguity tolerance", "Adaptive response", "Recovery"],
+  ],
 ] as const;
 
 function Framework() {
   return (
-    <AppShell
-      eyebrow="FRAMEWORK · METHODOLOGY"
-      title="The Quadrant Intelligence framework."
-    >
+    <AppShell eyebrow="FRAMEWORK · METHODOLOGY" title="The Quadrant Intelligence framework.">
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12 lg:col-span-8 border border-border p-10">
           <div className="label-eyebrow-gold mb-6">FOUNDATION</div>
@@ -57,7 +78,10 @@ function Framework() {
               ["Modes", "6 operating contexts"],
               ["Age range", "8 to 60+"],
             ].map(([k, v]) => (
-              <li key={k} className="flex items-baseline justify-between border-b border-border pb-3">
+              <li
+                key={k}
+                className="flex items-baseline justify-between border-b border-border pb-3"
+              >
                 <span className="text-muted-foreground">{k}</span>
                 <span>{v}</span>
               </li>
@@ -76,8 +100,13 @@ function Framework() {
                 <div className="font-display text-[26px] text-[var(--gold)] mb-5">{q}</div>
                 <ul className="space-y-3">
                   {items.map((p, i) => (
-                    <li key={p} className="flex items-baseline gap-3 text-[13px] border-b border-border pb-2">
-                      <span className="font-mono text-[10px] tracking-wider text-muted-foreground w-6">0{i+1}</span>
+                    <li
+                      key={p}
+                      className="flex items-baseline gap-3 text-[13px] border-b border-border pb-2"
+                    >
+                      <span className="font-mono text-[10px] tracking-wider text-muted-foreground w-6">
+                        0{i + 1}
+                      </span>
                       <span>{p}</span>
                     </li>
                   ))}

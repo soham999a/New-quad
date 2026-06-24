@@ -28,7 +28,12 @@ export function RadarChart({
     .join(" ");
 
   return (
-    <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-auto" role="img" aria-label="Quotient radar">
+    <svg
+      viewBox={`0 0 ${size} ${size}`}
+      className="w-full h-auto"
+      role="img"
+      aria-label="Quotient radar"
+    >
       {/* rings */}
       {rings.map((r, i) => (
         <polygon
@@ -48,7 +53,9 @@ export function RadarChart({
       {/* axes */}
       {data.map((_, i) => {
         const [x, y] = point(i, radius);
-        return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="var(--border)" strokeWidth={0.5} />;
+        return (
+          <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="var(--border)" strokeWidth={0.5} />
+        );
       })}
       {/* polygon */}
       <polygon
