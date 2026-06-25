@@ -40,7 +40,7 @@ function MyEvaluatorPage() {
       return;
     }
     Promise.all([getLatestAssessment(user.uid), getStudentEvaluator(user.uid)]).then(
-      ([assessment, evalAssign]) => {
+      ([assessment, evalAssign]: [any, any]) => {
         setEvalData(assessment);
         if (evalAssign?.evaluatorUid) {
           getUserProfile(evalAssign.evaluatorUid).then((prof) => setEvaluator(prof));

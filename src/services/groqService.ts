@@ -125,7 +125,7 @@ export async function generateReportNarrative({
 }: any) {
   const prompt = `Generate a professional QIDS assessment narrative.
 Name: ${intake?.name || "the individual"}
-Overall Grade: ${grade?.grade} (Score: ${Object.values(pillarScores).reduce((a: number, b: number) => a + b, 0) / 4}/100)
+Overall Grade: ${grade?.grade} (Score: ${(Object.values(pillarScores) as number[]).reduce((a: number, b: number) => a + b, 0) / 4}/100)
 Pillar Scores: IQ=${pillarScores.IQ}, EQ=${pillarScores.EQ}, SQ=${pillarScores.SQ}, AQ=${pillarScores.AQ}
 Return JSON: { "summary": "...", "development": "...", "recommendations": "..." }`;
 

@@ -98,8 +98,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
     const u = result.user;
+    let snap: any;
     try {
-      const snap = await getDoc(doc(db, "users", u.uid));
+      snap = await getDoc(doc(db, "users", u.uid));
       if (!snap.exists()) {
         const profile = {
           uid: u.uid,
@@ -117,7 +118,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (e: any) {
       console.warn("Google sign-in Firestore error:", e.message);
     }
-    return { user: u, isNew: !snap?.exists() };
+    return { user: u, isNew: snap ? !snap.exists() : true };
   };
 
   const resetPassword = async (email: string) => {
